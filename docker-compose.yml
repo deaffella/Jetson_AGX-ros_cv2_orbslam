@@ -19,7 +19,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix           # дисплей
     environment:
       - DISPLAY=$DISPLAY
-    working_dir: /orbslam
+    working_dir: /data
     entrypoint: 'bash'
 
 
