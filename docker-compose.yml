@@ -14,13 +14,12 @@ services:
     stdin_open: true
     network_mode: host
     volumes:
-      - ./:/orbslam
+      - ./data:/data
       - /dev:/dev                               # [обязательно] - для проброса Serial
       - /tmp/.X11-unix:/tmp/.X11-unix           # дисплей
     environment:
       - DISPLAY=$DISPLAY
     working_dir: /orbslam
-    #working_dir: /opt/ros_ws
     entrypoint: 'bash'
 
 
