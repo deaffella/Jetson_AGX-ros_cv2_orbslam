@@ -1,0 +1,26 @@
+version: "3.3"
+
+services:
+
+  orbslam:
+    container_name: orbslam
+    build:
+      context: ./orbslam
+      dockerfile: orbslam.Dockerfile
+    image: deaffella/orbslam:ros_melodic_opencv-r32.7.1
+    restart: "always"
+    privileged: true
+    tty: true
+    stdin_open: true
+    network_mode: host
+    volumes:
+      - ./:/orbslam
+      - /dev:/dev                               # [обязательно] - для проброса Serial
+      - /tmp/.X11-unix:/tmp/.X11-unix           # дисплей
+    environment:
+      - DISPLAY=$DISPLAY
+    working_dir: /orbslam
+    #working_dir: /opt/ros_ws
+    entrypoint: 'bash'
+
+
