@@ -4,9 +4,9 @@ services:
 
   orbslam:
     container_name: orbslam
-    build:
-      context: ./orbslam
-      dockerfile: orbslam.Dockerfile
+#    build:
+#      context: ./orbslam
+#      dockerfile: orbslam.Dockerfile
     image: deaffella/orbslam:ros_melodic_opencv-r32.7.1
     restart: "always"
     privileged: true
