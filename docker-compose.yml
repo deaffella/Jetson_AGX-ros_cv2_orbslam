@@ -8,6 +8,7 @@ services:
 #      context: ./orbslam
 #      dockerfile: orbslam.Dockerfile
     image: deaffella/orbslam:ros_melodic_opencv-r32.7.1
+    hostname: orbslam
     restart: "always"
     privileged: true
     tty: true
@@ -21,5 +22,3 @@ services:
       - DISPLAY=$DISPLAY
     working_dir: /data
     entrypoint: 'bash'
-
-
