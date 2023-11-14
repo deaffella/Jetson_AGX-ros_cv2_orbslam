@@ -4,15 +4,17 @@ services:
 
   orbslam:
     container_name: orbslam
-#    build:
-#      context: ./orbslam
-#      dockerfile: orbslam.Dockerfile
-    image: deaffella/orbslam:ros_melodic_opencv-r32.7.1
+    build:
+      context: ./orbslam
+      dockerfile: orbslam_realsense.Dockerfile
+    image: deaffella/orbslam:ros_melodic_opencv_librealsense-r32.7.1
+#    image: deaffella/orbslam:melodic_librealsense-r32.7.1
     restart: "always"
     privileged: true
     tty: true
     stdin_open: true
     network_mode: host
+    hostname: orbslam
     volumes:
       - ./data:/data
       - /dev:/dev                               # [обязательно] - для проброса Serial
