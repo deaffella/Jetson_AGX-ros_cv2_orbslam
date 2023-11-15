@@ -48,8 +48,10 @@ RUN apt update && \
         libegl1-mesa-dev libc++-dev libglew-dev libeigen3-dev \
         ninja-build libjpeg-dev libpng-dev libavcodec-dev libavutil-dev \
         libavformat-dev libswscale-dev libavdevice-dev \
-        # librealsense deps \
+        # librealsense deps
         libssl-dev freeglut3-dev libusb-1.0-0-dev libgtk-3-dev libatomic-ops-dev \
+        # other deps \
+        python3-gnupg \
         # ROS
         ros-${ROS_DISTRO}-desktop-full python3-catkin-tools ros-${ROS_DISTRO}-catkin
 
@@ -60,6 +62,7 @@ RUN if [ $(lsb_release -cs) = "bionic" ];  \
       else \
         apt install -y --no-install-recommends python2-dev python-pip python-numpy; \
     fi
+
 RUN apt update && apt install -y \
     python-opencv python-tk python-igraph
 
@@ -69,7 +72,7 @@ RUN which pip3 && pip3 --version && python3 -m pip install --upgrade pip && \
 
 RUN pip install --no-cache-dir rospkg defusedxml netifaces
 RUN pip3 install --upgrade --no-cache-dir setuptools packaging 'Cython<3' wheel
-RUN pip3 install --no-cache-dir --verbose wget psutil
+RUN pip3 install --no-cache-dir --verbose wget psutil pycryptodomex
 RUN pip3 install --upgrade --force-reinstall --no-cache-dir --verbose cmake
 RUN cmake --version && which cmake
 
@@ -134,11 +137,15 @@ RUN cd $ROS_WS && \
     . ${ROS_INSTALL_PATH}/setup.sh && \
     catkin build
 
+
+RUN apt update && apt install -y \
+    python-opencv python-tk python-igraph
+
 #RUN echo 'PYTHONPATH="/usr/local/lib:/usr/local/lib/python3.6/pyrealsense2:$PYTHONPATH"' >> ~/.bashrc
 #RUN echo 'export PYTHONPATH' >> ~/.bashrc
 
-## disable opencv warnings
-#ENV OPENCV_LOG_LEVEL=0
+# disable opencv warnings
+ENV OPENCV_LOG_LEVEL=0
 
 WORKDIR /
 RUN echo 'source /opt/ros_ws/devel/setup.bash' >> ~/.bashrc
