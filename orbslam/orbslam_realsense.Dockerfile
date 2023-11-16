@@ -105,6 +105,10 @@ RUN cd $USER_PACKAGES && \
     git clone https://github.com/UZ-SLAMLab/ORB_SLAM3.git ORB_SLAM3 && \
     python3 comment_realsense_recorder_strings.py \
             --filename='./ORB_SLAM3/Examples/Calibration/recorder_realsense_D435i.cc' \
+            --target-line='sensor.set_option(RS2_OPTION_AUTO_EXPOSURE_LIMIT,5000);'  \
+    && \
+    python3 comment_realsense_recorder_strings.py \
+            --filename='./ORB_SLAM3/Examples/Monocular-Inertial/mono_inertial_realsense_D435i.cc' \
             --target-line='sensor.set_option(RS2_OPTION_AUTO_EXPOSURE_LIMIT,5000);' \
     && \
     cd ORB_SLAM3 && \
@@ -139,10 +143,11 @@ RUN cd $ROS_WS && \
 
 
 RUN apt update && apt install -y \
-    python-opencv python-tk python-igraph
+    python-opencv python-tk python-igraph \
+    python-scipy
 
-#RUN echo 'PYTHONPATH="/usr/local/lib:/usr/local/lib/python3.6/pyrealsense2:$PYTHONPATH"' >> ~/.bashrc
-#RUN echo 'export PYTHONPATH' >> ~/.bashrc
+
+RUN echo "export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:${USER_PACKAGES}/ORB_SLAM3/Examples/ROS" >> ~/.bashrc
 
 # disable opencv warnings
 ENV OPENCV_LOG_LEVEL=0
