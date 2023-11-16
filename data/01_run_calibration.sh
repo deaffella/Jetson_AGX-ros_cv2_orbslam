@@ -10,7 +10,6 @@ rm -R $data_dir_path/
 
 mkdir -p $data_dir_path/IMU
 mkdir -p $data_dir_path/cam0
-cp april_6x6_80x80cm_larues.yaml $data_dir_path/
 
 cd $script_dir && \
 ./$script_name \
